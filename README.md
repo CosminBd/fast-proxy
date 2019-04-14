@@ -1,4 +1,4 @@
-Fast squid proxy
+## Fast squid proxy
 
 This bash script helps you set up a Ubuntu/Debian HTTP proxy in seconds and set the proxy details as env variables as: 
 
