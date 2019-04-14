@@ -16,13 +16,11 @@ service squid stop
 
 if [ -z "$port" ]
 then
-	$port=3333
-	service squid start
+	port=3333
 	export proxyPort=3333
 	ufw allow 3333/tcp
 else
 	sed -i -e "s/3333/${port}/g" /etc/squid/squid.conf
-	service squid start
 	export proxyPort=$port
 	ufw allow ${port}/tcp
 fi
@@ -35,4 +33,5 @@ echo "Hostname: ${red} $(hostname --all-ip-addresses) ${reset}"
 echo "Port: ${red} ${port} ${reset}"
 echo "Username: ${red} $username ${reset}"
 echo "Password: ${red} $password ${reset}"
+service squid start
 
