@@ -16,22 +16,26 @@ service squid stop
 
 if [ -z "$port" ]
 then
-	port=3333
-	export proxyPort=3333
-	ufw allow 3333/tcp
+        port=3333
+        echo "export proxyPort=3333" >>~/.profile
+        ufw allow 3333/tcp
 else
-	sed -i -e "s/3333/${port}/g" /etc/squid/squid.conf
-	export proxyPort=$port
-	ufw allow ${port}/tcp
+        sed -i -e "s/3333/${port}/g" /etc/squid/squid.conf
+        echo "export proxyPort=$port" >>~/.profile
+        export proxyPort=3333
+        ufw allow 3333/tcp
+else
+        sed -i -e "s/3333/${port}/g" /etc/squid/squid.conf
+        export proxyPort=$port
+        ufw allow ${port}/tcp
 fi
 
-export proxyAddress=$(hostname --all-ip-addresses)
-export proxyLogin=$username
-export proxyPassword=$password
+echo "export proxyAddress=$(hostname --all-ip-addresses)" >>~/.profile
+echo "export proxyLogin=$username" >>~/.profile
+echo "export proxyPassword=$password ">>~/.profile
 
 echo "Hostname: ${red} $(hostname --all-ip-addresses) ${reset}"
 echo "Port: ${red} ${port} ${reset}"
 echo "Username: ${red} $username ${reset}"
 echo "Password: ${red} $password ${reset}"
 service squid start
-
