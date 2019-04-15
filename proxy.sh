@@ -23,6 +23,7 @@ else
         sed -i -e "s/3333/${port}/g" /etc/squid/squid.conf
         echo "export proxyPort=$port" >>~/.profile
         ufw allow ${port}/tcp
+fi
 
 echo "export proxyAddress=$(hostname --all-ip-addresses)" >>~/.profile
 echo "export proxyLogin=$username" >>~/.profile
